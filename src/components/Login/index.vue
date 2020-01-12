@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <b-form @submit="onLogin">
+    <b-form @submit.prevent="onLogin">
       <b-row align-h="center" class="pb-3">
         <b-col cols="4">
           <label align="left" class="pb-2 w-100">
@@ -32,13 +32,16 @@
 export default {
   name: 'Login',
   data: () => ({
+    url: 'https://pre.ugoloc.ucann.ru/api/auth/login',
     name: '',
     login: null,
     pass: '',
     password: null
   }),
   methods: {
-    onLogin () {},
+    async onLogin () {
+      console.log(await this.$http('POST', this.url, { login: this.name, password: this.pass }))
+    },
     onInput (e, val, validateState) {
       this[val] = e.target.value
       this[validateState] = null
