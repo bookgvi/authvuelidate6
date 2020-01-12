@@ -1,5 +1,8 @@
-# authvuelidate6
+# XHMHttpRequest
+#### Вместо обычной axios в проекте используется XMLHttpRequest, который задействован с помощью плагина! 
 
+---
+---
 ## Project setup
 ```
 yarn install
