@@ -8,6 +8,7 @@ const instance = function (method, url, payload) {
     if (jwt) {
       xhr.setRequestHeader('Authorized', `Bearer ${jwt}`)
     }
+    // xhr.withCredentials = true
     xhr.setRequestHeader('Content-Type', 'application/json')
     xhr.addEventListener('load', () => {
       if (xhr.state === 200 || xhr.readyState === 4) {
