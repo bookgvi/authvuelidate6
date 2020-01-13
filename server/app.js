@@ -1,14 +1,22 @@
 const http = require('http')
 
-const host = '127.0.0.1'
+const host = 'localhost'
 const port = 7000
 const statusNotFound = 404
 const statusOK = 200
 
 const notFound = res => {
+  const response = `{
+    data: {
+      errors: [
+        { title: 'Ресурс не найден.' }
+      ]
+    }
+  }`
   res.statusCode = statusNotFound
   res.setHeader('Content-Type', 'text/html; charset=utf-8;')
-  res.write('<div style="text-align: center;"><h3>Not found</h3></div>')
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.write(response)
   res.end()
 }
 
@@ -18,10 +26,8 @@ const server = http.createServer((req, res) => {
       switch (req.url) {
         case '/': {
           res.statusCode = statusOK
-          res.setHeader('Content-Type', 'text/html; charset=utf-8;')
+          res.setHeader('Content-Type', 'text/html; charset=UTF-8;')
           res.setHeader('Access-Control-Allow-Origin', '*')
-          res.setHeader('Access-Control-Allow-Methods', '*')
-          res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept')
           res.write('<div style="text-align: center;"><h3>This is ROOT</h3></div>')
           res.end()
           break
@@ -29,6 +35,7 @@ const server = http.createServer((req, res) => {
         case '/home': {
           res.statusCode = statusOK
           res.setHeader('Content-Type', 'text/html; charset=utf-8;')
+          res.setHeader('Access-Control-Allow-Origin', '*')
           res.write('<div style="text-align: center;"><h3>This is HOME</h3></div>')
           res.end()
           break
@@ -45,17 +52,16 @@ const server = http.createServer((req, res) => {
         case '/api/admin': {
           res.statusCode = statusOK
           res.setHeader('Content-Type', 'text/html; charset=utf-8;')
+          res.setHeader('Access-Control-Allow-Origin', '*')
           res.write('<div style="text-align: center;"><h3>This is admin resource!!!</h3></div>')
           res.end()
           break
         }
         case '/api/user': {
           res.statusCode = statusOK
-          res.setHeader('Content-Type', 'text/html; charset=utf-8;')
+          res.setHeader('Content-Type', 'application/json')
           res.setHeader('Access-Control-Allow-Origin', '*')
-          res.setHeader('Access-Control-Allow-Methods', '*')
-          res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept')
-          res.write('<div style="text-align: center;"><h3>This is user resource!</h3></div>')
+          res.write('{ "a": "a" }')
           res.end()
           break
         }
@@ -64,6 +70,15 @@ const server = http.createServer((req, res) => {
           break
         }
       }
+      break
+    }
+    case 'OPTIONS': {
+      res.statusCode = statusOK
+      res.setHeader('Content-Type', 'text/html; charset=utf-8;')
+      res.setHeader('Access-Control-Allow-Origin', '*')
+      res.setHeader('Access-Control-Allow-Methods', '*')
+      res.setHeader('Access-Control-Allow-Headers', '*')
+      res.end()
       break
     }
     default: {
