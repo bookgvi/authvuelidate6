@@ -2,7 +2,7 @@
   <b-container>
     <b-row>
       <b-col>
-        <span v-html="pageSSR"></span>
+        <div id="ssr"></div>
       </b-col>
     </b-row>
   </b-container>
@@ -11,20 +11,19 @@
 <script>
 export default {
   name: 'Hello',
-  data: () => ({}),
-  computed: {
-    pageSSR: {
-      get () {
-        console.log(this.getResponse())
-        return this.getResponse()
-      }
-    }
+  data: () => ({
+    res: ''
+  }),
+  mounted () {
+    this.getResponse()
   },
   methods: {
     async getResponse () {
-      const url = `http://127.0.0.1:7000/api/user`
-      const res = this.$http('POST', url, '')
-      return res
+      const method = 'GET'
+      const url = `http://127.0.0.1:7000`
+      this.res = await this.$http(method, url, '')
+      const ssrPoint = document.getElementById('ssr')
+      ssrPoint.outerHTML = this.res
     }
   }
 }

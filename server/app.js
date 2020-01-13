@@ -26,9 +26,9 @@ const server = http.createServer((req, res) => {
       switch (req.url) {
         case '/': {
           res.statusCode = statusOK
-          res.setHeader('Content-Type', 'text/html; charset=UTF-8;')
+          res.setHeader('Content-Type', 'application/json')
           res.setHeader('Access-Control-Allow-Origin', '*')
-          res.write('<div style="text-align: center;"><h3>This is ROOT</h3></div>')
+          res.write(JSON.stringify('<div style="text-align: center;"><h3>This is ROOT</h3></div>'))
           res.end()
           break
         }
